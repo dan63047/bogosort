@@ -7,7 +7,12 @@ class BogoSort:
     def __init__(self, l):
         array = list(range(int(l)))
         random.shuffle(array)
-        print(f"Array created: {str(array)}\nSorting... (Ctrl+C to interrupt)")
+        if int(l) > 100:
+            print(
+                f"Array with {l} values created\nSorting... (Ctrl+C to interrupt)")
+        else:
+            print(
+                f"Array created: {str(array)}\nSorting... (Ctrl+C to interrupt)")
         start_time = time.time()
         step = 0
         try:
@@ -15,7 +20,10 @@ class BogoSort:
                 random.shuffle(array)
                 step += 1
             end_time = time.time()
-            print(f"Done: {str(array)}")
+            if int(l) > 100:
+                print("Done!")
+            else:
+                print(f"Done: {str(array)}")
             self.stats(end_time, start_time, l, step)
         except KeyboardInterrupt:
             end_time = time.time()
