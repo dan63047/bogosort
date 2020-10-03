@@ -5,6 +5,6 @@ This benchmark requires Python 3. To run the benchmark, you need to write in the
 
 Here is my results:
 
-[![*Screenshot bogosort 10 values*](https://i.imgur.com/lqU9sUA.png)](https://i.imgur.com/lqU9sUA.png)
-[![*Screenshot bogosort 11 values*](https://i.imgur.com/ZllPlKS.png)](https://i.imgur.com/ZllPlKS.png)
-[![*Screenshot bogosort 12 values*](https://i.imgur.com/nWczaqT.png)](https://i.imgur.com/nWczaqT.png)
+[![*Screenshot bogosort 10 values*](https://i.imgur.com/ClkLSlB.png)](https://i.imgur.com/ClkLSlB.png)
+[![*Screenshot bogosort 11 values*](https://i.imgur.com/KBKEtkn.png)](https://i.imgur.com/KBKEtkn.png)
+[![*Screenshot bogosort 12 values*](https://i.imgur.com/nWczaqT.png)](https://i.imgur.com/GsyzvM2.png)

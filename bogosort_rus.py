@@ -11,41 +11,32 @@ class BogoSort:
             print(f"Создан массив со {l} значениями\nСортировка... (Ctrl+C чтобы прервать)")
         else:
             print(f"Создан массив: {str(array)}\nСортировка... (Ctrl+C чтобы прервать)")
-        start_time = time.time()
+        start_time = datetime.datetime.now()
         step = 0
         try:
             while any(x > y for x, y in zip(array, array[1:])):
-                random.shuffle(array)
+                x = random.randint(0, int(l)-1)
+                y = random.randint(0, int(l)-1)
+                array[x], array[y] = array[y], array[x]
                 step += 1
-            end_time = time.time()
+            end_time = datetime.datetime.now()
             if int(l) > 100:
                 print("Готово!")
             else:
                 print(f"Готово: {str(array)}")
             self.stats(end_time, start_time, l, step)
         except KeyboardInterrupt:
-            end_time = time.time()
+            end_time = datetime.datetime.now()
             print("Сортировка прервана пользователем")
             self.stats(end_time, start_time, l, step)
 
     def stats(self, end_time, start_time, l, step):
         bogosort_time = end_time - start_time
         try:
-            steps_for_sec = step / bogosort_time
+            steps_for_sec = round(step / bogosort_time.total_seconds(), 3)
         except Exception:
             steps_for_sec = "∞"
-        time_d = int(bogosort_time) / (3600 * 24)
-        time_h = int(bogosort_time) / 3600 - int(time_d) * 24
-        time_min = int(bogosort_time) / 60 - int(time_h) * \
-            60 - int(time_d) * 24 * 60
-        time_sec = int(bogosort_time) - int(time_min) * 60 - \
-            int(time_h) * 3600 - int(time_d) * 24 * 60 * 60
-        time_msec = (bogosort_time - int(bogosort_time))*1000
-        str_up_time = '%01d:%02d:%02d:%02d.%03d' % (
-            time_d, time_h, time_min, time_sec, time_msec)
-        datetime_start_time = datetime.datetime.fromtimestamp(start_time)
-        datetime_end_time = datetime.datetime.fromtimestamp(end_time)
-        print(f" {'Кол-во элементов:':25}{l}\n {'Время старта:':25}{datetime_start_time.strftime('%d.%m.%Y %H:%M:%S.%f')}\n {'Кол-во шагов:':25}{step}\n {'Время завершения:':25}{datetime_end_time.strftime('%d.%m.%Y %H:%M:%S.%f')}\n {'Потрачено времени:':25}{str_up_time}\n {'Скорость сортировки:':25}{steps_for_sec} шаг/сек")
+        print(f" {'Кол-во элементов:':25}{l}\n {'Время старта:':25}{start_time.strftime('%d.%m.%Y %H:%M:%S.%f')}\n {'Кол-во шагов:':25}{step}\n {'Время завершения:':25}{end_time.strftime('%d.%m.%Y %H:%M:%S.%f')}\n {'Потрачено времени:':25}{bogosort_time}\n {'Скорость сортировки:':25}{steps_for_sec} шаг/сек")
 
 
 print("Алгоритм сортировки BogoSort очень прост: он просто передвигает значения в массиве в рандомные места, пока не случится чудо и массив не отсортируется\nСколько элементов должно быть в массиве для сортировки?")
