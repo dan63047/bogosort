@@ -16,37 +16,37 @@ def numbers5symbols(num):
     if len(str(num)) <= 4:
         return str(num)
     elif len(str(num)) <= 5:
-        num = num/10**3
+        num /= 10**3
         return f"{num:.{1}f}k"
     elif len(str(num)) <= 6:
-        num = num/10**3
+        num /= 10**3
         return f"{num:.{0}f}k"
     elif len(str(num)) <= 7:
-        num = num/10**6
+        num /= 10**6
         return f"{num:.{2}f}M"
     elif len(str(num)) <= 8:
-        num = num/10**6
+        num /= 10**6
         return f"{num:.{1}f}M"
     elif len(str(num)) <= 9:
-        num = num/10**6
+        num /= 10**6
         return f"{num:.{0}f}M"
     elif len(str(num)) <= 10:
-        num = num/10**9
+        num /= 10**9
         return f"{num:.{2}f}B"
     elif len(str(num)) <= 11:
-        num = num/10**9
+        num /= 10**9
         return f"{num:.{1}f}B"
     elif len(str(num)) <= 12:
-        num = num/10**9
+        num /= 10**9
         return f"{num:.{0}f}B"
     elif len(str(num)) <= 13:
-        num = num/10**12
+        num /= 10**12
         return f"{num:.{2}f}T"
     elif len(str(num)) <= 14:
-        num = num/10**12
+        num /= 10**12
         return f"{num:.{1}f}T"
     elif len(str(num)) >= 15:
-        num = num/10**12
+        num /= 10**12
         return f"{num:.{0}f}T"
 
 class DeltaTemplate(Template):
@@ -61,10 +61,10 @@ def strfdelta(dtfrom:datetime.datetime, zero:datetime.datetime) -> str:
         negative = False
     show_days = True
     if tdelta.days == 0: show_days = False
+    hours, rem = divmod(tdelta.seconds, 3600)
+    d = {"D": tdelta.days}
+    minutes, seconds = divmod(rem, 60)
     if show_days:
-        d = {"D": tdelta.days}
-        hours, rem = divmod(tdelta.seconds, 3600)
-        minutes, seconds = divmod(rem, 60)
         d["H"] = '{:02d}'.format(hours)
         d["M"] = '{:02d}'.format(minutes)
         d["S"] = '{:02d}'.format(seconds)
@@ -72,20 +72,14 @@ def strfdelta(dtfrom:datetime.datetime, zero:datetime.datetime) -> str:
             t = DeltaTemplate('- %D дн. %H:%M:%S')
         else:
             t = DeltaTemplate('%D дн. %H:%M:%S')
-        return t.substitute(**d)
     else:
-        d = {"D": tdelta.days}
-        hours, rem = divmod(tdelta.seconds, 3600)
-        minutes, seconds = divmod(rem, 60)
         hours += d["D"]*24
         d["H"] = locale.format_string('%d', hours, grouping=True)
         d["M"] = '{:02d}'.format(minutes)
         d["S"] = '{:02d}'.format(seconds)
-        if negative:
-            t = DeltaTemplate('-%H:%M:%S')
-        else:
-            t = DeltaTemplate('%H:%M:%S')
-        return t.substitute(**d)
+        t = DeltaTemplate('-%H:%M:%S') if negative else DeltaTemplate('%H:%M:%S')
+
+    return t.substitute(**d)
 
 class BogoSort:
     def __init__(self):
@@ -114,10 +108,7 @@ class BogoSort:
                 self.array[x], self.array[y] = self.array[y], self.array[x]
                 self.step += 1
             self.end_time = datetime.datetime.now()
-            if int(l) > 100:
-                done_str = "Готово!"
-            else:
-                done_str = f"Готово: {str(self.array)}"
+            done_str = "Готово!" if int(l) > 100 else f"Готово: {str(self.array)}"
             print(done_str, end=" "*(90-len(done_str))+"\n")
             self.stats()
         except KeyboardInterrupt:
